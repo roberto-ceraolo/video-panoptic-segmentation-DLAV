@@ -72,7 +72,9 @@ B = instance % 256
 
 The following is the label distribution in KITTI-STEP (image taken from "STEP: Segmenting and Tracking Every Pixel" paper):
 
-![Label Distribution](images_readme/label_distribution_kitti.png)
+
+<img src="images_readme/label_distribution_kitti.png" alt="Label Distribution" width="350">
+
 
 ## Results
 Qualitative and Quantitative results of your experiments. 
