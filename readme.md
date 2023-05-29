@@ -1,42 +1,31 @@
-#Title: Diffusion Models against Learnable Kernels for Video Panoptic Segmentation
-##Subtitle: Ceraolo Martorella Minini DLAV2023 Final Project
+# Diffusion Models against Learnable Kernels for Video Panoptic Segmentation
+## Ceraolo Martorella Minini DLAV2023 Final Project
 
-##Introduction - Explaination of what’s VPS
+## Introduction - Explaination of what’s VPS
 
-Panoptic segmentation is an advanced computer vision task that combines instance segmentation and semantic segmentation to provide a comprehensive understanding of the visual scene in a video. It aims to label every pixel in the video with a class label and an instance ID, thereby differentiating between different objects and identifying their boundaries.
-To understand panoptic segmentation in detail, let's break it down into its components:
-1. Semantic Segmentation: Semantic segmentation involves dividing an image or video into multiple meaningful segments based on the semantic content of the scene. Each pixel is assigned a class label representing the object or region it belongs to. For example, in a street scene, semantic segmentation would classify pixels into categories like pedestrians, cars, buildings, roads, and trees. It focuses on understanding the high-level scene structure.
-2. Instance Segmentation: Instance segmentation takes semantic segmentation a step further by not only identifying object categories but also differentiating between individual instances of objects. It assigns a unique ID to each object instance within a class, enabling pixel-level separation of objects. For example, if there are multiple cars in an image, instance segmentation would distinguish them by assigning a unique ID to each car.
-3. Video Panoptic Segmentation: Video Panoptic segmentation extends the concept of instance and semantic segmentation to video sequences. It combines the two tasks to provide a more comprehensive understanding of the scene. Panoptic segmentation aims to label every pixel in the video with both a class label and an instance ID, thereby distinguishing between different objects and identifying their boundaries over time. This information is valuable for applications like object tracking, activity recognition, and scene understanding.
-To achieve panoptic segmentation in videos, various deep learning techniques are employed, often building upon advancements in image-based panoptic segmentation. These techniques typically involve the use of convolutional neural networks (CNNs) to process video frames, extract features, and predict the class labels and instance IDs for each pixel. The models are trained on large annotated datasets to learn to generalize and accurately segment objects in different video scenes.
-Panoptic segmentation in videos can be challenging due to several factors, including occlusions, motion blur, and changes in lighting conditions. Handling temporal coherence and tracking objects across frames are important considerations to achieve accurate and consistent segmentation results. Overall, video panoptic segmentation combines semantic segmentation and instance segmentation to provide a detailed understanding of the visual scene in a video. It plays a crucial role in various applications, including autonomous driving, video surveillance, augmented reality, and robotics, enabling machines to perceive and interpret the environment more comprehensively.
+Panoptic segmentation is an advanced computer vision task that combines instance segmentation and semantic segmentation to provide a comprehensive understanding of the visual scene in a video. It aims to label every pixel in the video with a class label and an instance ID, thereby differentiating between different objects and identifying their boundaries. This task involves simultaneously segmenting and tracking "things" (individual objects) and "stuff" (background regions). Handling temporal coherence and tracking objects across frames are important considerations to achieve accurate and consistent segmentation results. It plays a crucial role in various applications, including autonomous driving, video surveillance, augmented reality, and robotics, enabling machines to perceive and interpret the environment more comprehensively.
 
 
-##Approach
+## Approach
 The two methods that we studied and worked on are Pix2Seq-D and Video-k-Net.
 
-###Pix2Seq-D
-The paper proposes a generalist approach to panoptic segmentation, which involves assigning both semantic (category) and instance ID labels to every pixel in an image. The task is challenging because different permutations of instance IDs can be valid solutions, requiring the learning of a high-dimensional one-to-many mapping. State-of-the-art methods typically rely on custom architectures and task-specific loss functions to address this problem.
-In contrast, the authors present a formulation of panoptic segmentation as a discrete data generation problem, without relying on specific task-related biases. They use a diffusion model based on analog bits, which is a probabilistic generative model, to represent panoptic masks. The proposed model has a simple and generic architecture and loss function, making it applicable to a wide range of panoptic segmentation tasks.
-One key advantage of the proposed method is its ability to handle video data in a streaming setting. By incorporating past predictions as a conditioning signal, the model learns to automatically track object instances across consecutive frames. This feature allows the method to perform video panoptic segmentation without the need for additional specialized techniques.
-The authors conducted extensive experiments to evaluate their generalist approach. The results demonstrate that their method can achieve competitive performance compared to state-of-the-art specialist methods in similar settings. By leveraging the power of the diffusion model and incorporating temporal information, the proposed approach offers a promising alternative for panoptic segmentation tasks without the need for task-specific architectures or loss functions.
+### Pix2Seq-D
+The paper proposes a generalist approach to panoptic segmentation, which involves assigning both semantic (category) and instance ID labels to every pixel in an image. The authors present a formulation of panoptic segmentation as a discrete data generation problem, without relying on specific task-related biases. They use a diffusion model based on analog bits, which is a probabilistic generative model, to represent panoptic masks. The proposed model has a simple and generic architecture and loss function, making it applicable to a wide range of panoptic segmentation tasks. By leveraging the power of the diffusion model and incorporating temporal information, the proposed approach offers a promising alternative for panoptic segmentation tasks without the need for task-specific architectures or loss functions.
 
 
 
-###Videoknet
-Video K-Net is a framework for fully end-to-end video panoptic segmentation. Video panoptic segmentation involves simultaneously segmenting and tracking "things" (individual objects) and "stuff" (background regions) in a video. The proposed method builds upon K-Net, a technique that unifies image segmentation using learnable kernels. The authors observe that the learnable kernels from K-Net, which encode object appearances and contexts, can naturally associate identical instances across different frames in a video. This observation motivates the development of Video K-Net, which leverages kernel-based appearance modeling and cross-temporal kernel interaction to perform video panoptic segmentation.
-Despite its simplicity, Video K-Net achieves state-of-the-art results on several benchmark datasets, including Citscapes-VPS, KITTI-STEP, and VIPSeg, without relying on additional complex techniques. In particular, on the KITTI-STEP dataset, the method achieves nearly 12% relative improvement over previous approaches. 
+### Videoknet
+Video K-Net is a framework for fully end-to-end video panoptic segmentation. The method builds upon K-Net, a technique that unifies image segmentation using learnable kernels. The authors observe that the learnable kernels from K-Net, which encode object appearances and contexts, can naturally associate identical instances across different frames in a video. This observation motivates the development of Video K-Net, which leverages kernel-based appearance modeling and cross-temporal kernel interaction to perform video panoptic segmentation.
 
 
-##History - our project
+## History - our project
 We believe that the idea behind it is incredibly fascinating and powerful, and that’s why we were very keen on working with it, notwithstanding the issues we had. We spent several weeks trying to run the Tensorflow code provided by Google Research, but we encountered numerous issues that prevented us from using their code (see the section #issues for more details). We tried a huge amount of solutions, different setups, several GPUs and GPU providers, and so on, without success. So more recently, we decided to embark on an ambitious mission: rewriting the Pix2Seq-D codebase in PyTorch. Fortunately, individual contributors on Github already converted some sub-parts of the project (e.g. Bit-diffusion, Pix2Seq). After some heavy work, we actually managed to have a draft of the full project. It is now running the training for the very first time, so we don’t expect perfect results yet. We plan on pursuing and completing this project also after the milestone deadline.
  
 In parallel, since we knew about the uncertainty of such a challenge, we also setup and run the training of another architecture, Video-k-net, so that we also have good outputs to show, and a baseline performance to compare the results of our main contribution.
 
 
-##Contribution overview
-Our main contribution is within the Pix2Seq-D architecture. The contributions are three: the application of the architecture to the task of Video Panoptic Segmentation (the authors used it for other tasks, namely MISSING). 
-
+## Contribution overview
+Our main contribution is within the Pix2Seq-D architecture. The contributions are three: the application of the architecture to the task of Video Panoptic Segmentation (the authors used it for other tasks, namely Image Panoptic Segmentation and Video Segmentation). 
 
 First of all, we believe that our re-implementation in Pytorch can help the scientific community, ensuring more interoperability, clarity, and extending the audience that can build solutions on top of Pix2Seq-D. Diffusion models are very recent and proved to be very powerful, so the more researchers can have access to resources and codebases, the faster innnovations will come. 
 
@@ -45,7 +34,7 @@ Secondly, our endgoal is to try to improve Pix2Seq-D. The solution they propose 
 Finally, we ran another architecture, Video-k-net, in order to have a solid benchmark, with same pre-training and training, and become familiar with the panoptic mask generation process.
 
 
-##Experimental setup
+## Experimental setup
 With both architectures, we kept consistency of the training procedure. In both cases, we used the following experimental setup:
 - Backbone: ResNet50 pre-trained on ImageNet
 - pre-training on Cityscapes
@@ -60,7 +49,7 @@ Finally, since the training processes were heavy, we used powerful GPUs. More sp
 - an RTX3090 for Videokent
 - two A100 of 80GB for PIx2Seq-d
 
-##Data
+## Data
 The dataset used for pre-training is Cityscapes. Cityscapes dataset is a high-resolution road-scene dataset which contains 19 classes. (8 thing classes and 11 stuff classes). It contains 2975 images for training, 500 images for validation and 1525 images for testing.
 
 Our pre-training for Pix2Seq-D was done with the images in .png format. The dataset can be downloaded with the official scripts https://github.com/mcordts/cityscapesScripts
@@ -92,9 +81,9 @@ traffic sign   | 7
 vegetation     | 8
 terrain        | 9
 sky            | 10
-person&dagger; | 11
+person         | 11
 rider          | 12
-car&dagger;    | 13
+car            | 13
 truck          | 14
 bus            | 15
 train          | 16
@@ -102,18 +91,18 @@ motorcycle     | 17
 bicycle        | 18
 void           | 255
 
-##Results
+## Results
 Qualitative and Quantitative results of your experiments. 
 
 Qualitative: Put the gifs here!!
 Quantitative: metrics
 
 
-##Code
+## Code
 Here you can find the link to our implementation of Pix2Seq-d: Link to repo 1 
 Here you can find the link to our repository for Video-k-net: Link to repo 2
 
-##Side notes: issues we had
+## Side notes: issues we had
 We nelieve it can be useful to share with the EPFL community the issues that we encountered…
 
 Given the time constraint, we decided to switch to the use of external pay-per-use GPUs, namely runpod.io.
